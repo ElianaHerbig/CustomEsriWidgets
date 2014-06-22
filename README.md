@@ -3,7 +3,36 @@ EsriJavascriptAttributeTable
 
 A basic attribute table widget for the Esri Javascript API
 
-<h3>Basic Usage:</h3>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <style>
+	html, body, #attTable {
+		width: 100%;
+		height:100%;
+	}
+    </style>
+  </head>
+  <body>
+    <div id="attrTable"></div>
+    <script>
+	var dojoConfig = {
+		parseOnLoad: true,
+		packages: [{
+			"name": "custom",
+			//CHANGE: this value is URL dependent:
+			"location": "/custom"
+		}]
+	};
+  </script>
+  <script src="//js.arcgis.com/3.8/"></script>
+  </body>  
+</html>
+
+Script:
 <pre>
 require([
 	"custom/attributeTable",
