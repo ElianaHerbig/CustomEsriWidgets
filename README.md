@@ -3,6 +3,7 @@ EsriJavascriptAttributeTable
 
 A basic attribute table widget for the Esri Javascript API
 
+```
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,9 +32,10 @@ A basic attribute table widget for the Esri Javascript API
   <script src="//js.arcgis.com/3.8/"></script>
   </body>  
 </html>
+```
 
 Script:
-<pre>
+```
 require([
 	"custom/attributeTable",
 	"esri/layers/ArcGISDynamicMapServiceLayer",
@@ -46,7 +48,7 @@ require([
 		console.log("Row clicked with id:" + e.id);
 	});
 });
-</pre>
+```
 
 <h3>All options:</h3>
 Parameters:
