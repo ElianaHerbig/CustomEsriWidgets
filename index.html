@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <style>
+		html, body, #attTable {
+			width: 100%;
+			height:100%;
+		}
+    </style>
+  </head>
+  <body>
+	<div id="attrTable"></div>
+    <script>
+		var dojoConfig = {
+			parseOnLoad: true,
+			packages: [{
+				"name": "custom",
+				//CHANGE: this value is URL dependent:
+				"location": "/custom"
+			}]
+		};
+	</script>
+  <script src="//js.arcgis.com/3.8/"></script>
+
+	<script>
+		require([
+			"custom/attributeTable",
+			"esri/layers/ArcGISDynamicMapServiceLayer",
+		], function(AttributeTable, ArcGISDynamicMapServiceLayer){
+			var at = new AttributeTable({
+				id: "OBJECTID",
+				queryLayer: new ArcGISDynamicMapServiceLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_LandRecords_Louisville/MapServer/1"),
+			});
+			at.on("rowClick", function(e) {
+				console.log("Row clicked with id:" + e.id);
+			});
+		});
+	</script>
+  </body>  
+
+</html>
