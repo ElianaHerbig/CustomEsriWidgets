@@ -59,14 +59,13 @@ Recommended:
  * id: 'FID' - default unique id for grid, must be in fields if not using default
 
 Optional:
- * structure: [] - array of key-value structure parameters, unless specified, 
- * Table structure defaults to using field alias's as column headings
+ * structure: [] - array of key-value structure parameters, unless specified, table structure defaults to using field alias's as column headings
  * autoHeight: true - grid layout
  * autoWidth: true - grod layout, must be false if using widths in structure
  * fields: ["*"] - fields to use, * means all; 
  * div: "attrTable" - div to place table in
  * loadingMessage: 'Loading...'
- * sortInfo: 1 - collumn number to sort by default
+ * sortInfo: 1 - column number to sort by default
 
 See:
  * DataGrid - http://dojotoolkit.org/reference-guide/1.9/dojox/grid/DataGrid.html
