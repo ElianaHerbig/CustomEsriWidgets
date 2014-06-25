@@ -50,19 +50,13 @@ define([
         fields: ["*"],
         div: "attrTable",
         loadingMessage: 'Loading...',
-		maxResults: 51,
         sortInfo: 1,
-		dataset: 1,
-		minLength: 10, //min field length
         /**
          * default constructor - initializes the data members
          * called by using new AttributeTable( {} );
          * @param {object} options
          * 
          */
-		float2int:function(value) {
-			return value | 0;
-		},
         constructor: function(options) {
             var T = this;           //copy this object
 
@@ -73,7 +67,7 @@ define([
             T.q = new Query();
             T.q.returnGeometry = false;
             T.q.outFields = T.fields;
-            T.q.where = "1=1 AND " + T.id + " < " + T.maxResults;
+            T.q.where = "1=1;
             T.rows = [];
             T.qt.execute(T.q, function(results) {
                 //if no structure exists, setup a default using field alias and width of 100% / number_fields
