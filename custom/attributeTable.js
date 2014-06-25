@@ -50,13 +50,19 @@ define([
         fields: ["*"],
         div: "attrTable",
         loadingMessage: 'Loading...',
+		maxResults: 51,
         sortInfo: 1,
+		dataset: 1,
+		minLength: 10, //min field length
         /**
          * default constructor - initializes the data members
          * called by using new AttributeTable( {} );
          * @param {object} options
          * 
          */
+		float2int:function(value) {
+			return value | 0;
+		},
         constructor: function(options) {
             var T = this;           //copy this object
 
@@ -67,14 +73,25 @@ define([
             T.q = new Query();
             T.q.returnGeometry = false;
             T.q.outFields = T.fields;
-            T.q.where = "1=1";
+            T.q.where = "1=1 AND " + T.id + " < " + T.maxResults;
             T.rows = [];
             T.qt.execute(T.q, function(results) {
-                //if no structure exists, setup a default using field alias
+                //if no structure exists, setup a default using field alias and width of 100% / number_fields
                 if (T.structure.length === 0) {
                     T.alias = {};
+					var width =  0;
+					//calculate total width based on field.length
                     Array.forEach(results.fields, function(field) {
-                        T.structure.push({name: field.alias, field: field.name});
+						if(!field.length)
+							field.length = T.minLength; //min width
+						width += field.length;
+					});
+					//set up structure
+                    Array.forEach(results.fields, function(field) {
+                        T.structure.push({
+							name: field.alias, 
+							field: field.name, 
+							width: T.float2int( field.length / width * 100 ) });
                     });
                 }
 
@@ -117,10 +134,7 @@ define([
                     T.emit("rowClick", {id: id});
                 });
 
-
             });
-
         }
-
     });
 });
