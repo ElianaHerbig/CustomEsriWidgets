@@ -67,7 +67,7 @@ define([
             T.q = new Query();
             T.q.returnGeometry = false;
             T.q.outFields = T.fields;
-            T.q.where = "1=1;
+            T.q.where = "1=1";
             T.rows = [];
             T.qt.execute(T.q, function(results) {
                 //if no structure exists, setup a default using field alias and width of 100% / number_fields
