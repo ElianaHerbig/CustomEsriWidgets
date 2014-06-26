@@ -78,8 +78,9 @@ define([
 			//calculate total width based on field.length
 			Array.forEach(results.fields, function(field) {
 				if(!field.length)
-					field.length = T.minLength; //min width
-				width += field.length;
+					width += T.minLength; //min width
+				else
+					width += field.length;
 			});
 			//set up structure
 			Array.forEach(results.fields, function(field) {
