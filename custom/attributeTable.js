@@ -70,24 +70,26 @@ define([
             T.q.where = "1=1";
             T.rows = [];
             T.qt.execute(T.q, function(results) {
-                //if no structure exists, setup a default using field alias and width of 100% / number_fields
-                if (T.structure.length === 0) {
-                    T.alias = {};
-					var width =  0;
-					//calculate total width based on field.length
-                    Array.forEach(results.fields, function(field) {
-						if(!field.length)
-							field.length = T.minLength; //min width
-						width += field.length;
-					});
-					//set up structure
-                    Array.forEach(results.fields, function(field) {
-                        T.structure.push({
-							name: field.alias, 
-							field: field.name, 
-							width: T.float2int( field.length / width * 100 ) });
-                    });
-                }
+                //if no structure exists, setup a default using field alias 
+                //and calculated width based on field length
+		if (T.structure.length === 0) {
+			T.alias = {};
+			var width =  0;
+			//calculate total width based on field.length
+			Array.forEach(results.fields, function(field) {
+				if(!field.length)
+					field.length = T.minLength; //min width
+				width += field.length;
+			});
+			//set up structure
+			Array.forEach(results.fields, function(field) {
+				T.structure.push({
+					name: field.alias, 
+					field: field.name, 
+					width: T.float2int( field.length / width * 100 ) 
+				});
+			});
+		}
 
                 //load the rows of data
                 Array.forEach(results.features, function(feature) {
@@ -121,13 +123,10 @@ define([
                 window.onresize = function() {
                     T.grid._refresh();
                 };
-                
-                
                 T.grid.on("rowClick", function(e) {
                     var id = T.grid.getItem(e.rowIndex)[T.id][0];
                     T.emit("rowClick", {id: id});
                 });
-
             });
         }
     });
