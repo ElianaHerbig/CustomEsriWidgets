@@ -25,8 +25,10 @@ formatters | {} | key value pairs of field names or field types to their formatt
 
 Methods
 =======
--startup(): starts the grid in the div specified. If no div id is specified, the grid will not be created
--getGrid(): returns the attribute table's grid object. Useful if you want to manipulate/extend the grid.
+Name | Description
+-----|------------
+startup | starts the grid in the div specified. If no div id is specified in the constructor, the grid will not be created
+getGrid | returns the attribute table's grid object after it is created. Useful if you want to manipulate/extend the grid.
 
 Events
 ======
