@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title></title>
-    <meta content="">
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
-    <style>
-		html, body, #attTable {
-			width: 100%;
-			height:100%;
-		}
-    </style>
-  </head>
-  <body>
-	<div id="attrTable"></div>
-    <script>
-		var dojoConfig = {
-			parseOnLoad: true,
-			packages: [{
-				"name": "custom",
-				//CHANGE: this value is URL dependent:
-				"location": "/custom"
-			}]
-		};
-	</script>
-  <script src="//js.arcgis.com/3.8/"></script>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+        <title></title>
+        <style type="text/css">
+        </style>
+    </head>
+    <body>
+        <div id="grid"></div>
+        <script>
+            var dojoConfig = {
+                isDebug: true,
+                parseOnLoad: true,
+                packages: [{
+                        "name": "gis",
+                        "location": location.pathname.replace(/[^\/]+$/, '') + "js/gis"
+                    }]
+            };
+        </script>
+        <script src="http://js.arcgis.com/3.8/"></script>
+        <script>
+            require([
+                "gis/esri_dgrid",
+                "dgrid/Grid"
+            ], function(Esri_dgrid, Grid) {
+                var grid = new Esri_dgrid({
+                    featureService: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/1",
+                    div: 'grid',
+                    formatters: {
+                        esriFieldTypeDate: function(date) {
+                            if (date)
+                                return (new Date(date));
+                            return "N/A";
+                        },
+                        esriFieldTypeString: function(url) {
+                            if(url.indexOf("http") !== -1)
+                                return '<a href="' + url + '">' + url + '</a>';
+                            return url;
+                        }
+                    },
+                });
 
-	<script>
-		require([
-			"custom/attributeTable",
-			"esri/layers/ArcGISDynamicMapServiceLayer",
-		], function(AttributeTable, ArcGISDynamicMapServiceLayer){
-			var at = new AttributeTable({
-				id: "OBJECTID",
-				queryLayer: new ArcGISDynamicMapServiceLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_LandRecords_Louisville/MapServer/1"),
-			});
-			at.on("rowClick", function(e) {
-				console.log("Row clicked with id:" + e.id);
-			});
-		});
-	</script>
-  </body>  
-
+                grid.on("ready", function(data) {
+                    grid.startup();
+                    console.log(data);
+                });
+            });
+        </script>
+    </body>
 </html>
