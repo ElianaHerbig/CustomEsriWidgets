@@ -1,72 +1,39 @@
 EsriJavascriptAttributeTable
 ============================
 
-A basic attribute table widget for the Esri Javascript API
+A basic attribute table widget for the Esri Javascript API using dgrid. 
 
-```
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-    <meta content="">
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
-    <style>
-	html, body, #attTable {
-		width: 100%;
-		height:100%;
-	}
-    </style>
-  </head>
-  <body>
-    <div id="attrTable"></div>
-    <script>
-	var dojoConfig = {
-		parseOnLoad: true,
-		packages: [{
-			"name": "custom",
-			//CHANGE: this value is URL dependent:
-			"location": "/custom"
-		}]
-	};
-  </script>
-  <script src="//js.arcgis.com/3.8/"></script>
-  </body>  
-</html>
+http://dojofoundation.org/packages/dgrid/
+
+Constructor:
+=======================
+```JavaScript
+var table = new Esri_dgrid({options});
 ```
 
-Script:
-```
-require([
-	"custom/attributeTable",
-	"esri/layers/ArcGISDynamicMapServiceLayer",
-], function(AttributeTable, ArcGISDynamicMapServiceLayer){
-	var at = new AttributeTable({
-		id: "OBJECTID",
-		queryLayer: new ArcGISDynamicMapServiceLayer("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Louisville/LOJIC_LandRecords_Louisville/MapServer/1"),
-	});
-	at.on("rowClick", function(e) {
-		console.log("Row clicked with id:" + e.id);
-	});
+Options
+========
+
+Name | Default | Description
+-----|---------|------------
+featureService | `null` | Required - URL or feature service
+div | `null` | div identifier to place attribute table if using startup() method
+fields | `[*]` | field names to place in attribute table in an array of strings
+labels | {} | key value pairs of fields mapped to their labels to display in column headings
+formatters | {} | key value pairs of field names or field types to their formatter function
+
+
+Methods
+=======
+-startup(): starts the grid in the div specified. If no div id is specified, the grid will not be created
+-getGrid(): returns the attribute table's grid object. Useful if you want to manipulate/extend the grid.
+
+Events
+======
+-ready: fires when the data has been fetched and ready to use. Usage: 
+```JavaScript
+table.on("ready", function(data) {
+	table.startup(); //start the attribute table
+	console.log(data); //or do something with the grid data
 });
 ```
-
-<h3>All options:</h3>
-Parameters:
-Required:
- * queryLayer: null - layer to query for data
-
-Recommended: 
- * id: 'FID' - default unique id for grid, must be in fields if not using default
-
-Optional:
- * structure: [] - array of key-value structure parameters, unless specified, table structure defaults to using field alias's as column headings
- * autoHeight: true - grid layout
- * autoWidth: true - grod layout, must be false if using widths in structure
- * fields: ["*"] - fields to use, * means all; 
- * div: "attrTable" - div to place table in
- * loadingMessage: 'Loading...'
- * sortInfo: 1 - column number to sort by default
-
-See:
- * DataGrid - http://dojotoolkit.org/reference-guide/1.9/dojox/grid/DataGrid.html
- * ItemStore - https://dojotoolkit.org/reference-guide/1.9/dojo/store.html
